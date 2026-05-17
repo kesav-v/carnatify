@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>carnatify example</title>
+  </head>
+  <body>
+    <h1>carnatify</h1>
+    <label>
+      Notes
+      <input id="notes" type="text" value="S,R,G,M,P,D,N,S" size="40" />
+    </label>
+    <button id="play" type="button">Play</button>
+    <pre id="log"></pre>
+    <script type="module">
+      import { initCarnatify, CarnaticNoteStream } from "../../javascript/src/index.js";
+
+      const log = (msg) => {
+        document.getElementById("log").textContent += msg + "\n";
+      };
+
+      await initCarnatify();
+
+      document.getElementById("play").addEventListener("click", async () => {
+        const stream = await CarnaticNoteStream.from_notes(
+          document.getElementById("notes").value,
+        );
+
+        const ctx = new AudioContext();
+        let t = ctx.currentTime;
+
+        for (const note of stream.collect_notes()) {
+          log(`${note.frequency_hz.toFixed(1)} Hz  ${note.duration_secs.toFixed(3)}s`);
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.value = note.frequency_hz;
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + note.duration_secs);
+          t += note.duration_secs;
+        }
+
+        await new Promise((r) => setTimeout(r, (t - ctx.currentTime + 0.05) * 1000));
+        ctx.close();
+      });
+    </script>
+  </body>
+</html>

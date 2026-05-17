@@ -1,0 +1,16 @@
+[package]
+name = "carnatify-py"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+repository = "https://github.com/kesav/carnatify"
+rust-version = "1.85"
+description = "Python bindings for carnatify-core"
+
+[lib]
+name = "carnatify_native"
+crate-type = ["cdylib"]
+
+[dependencies]
+carnatify-core = { path = "../carnatify-core" }
+pyo3 = { version = "0.24", features = ["extension-module", "abi3-py39"] }

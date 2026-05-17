@@ -1,31 +1,48 @@
-# CarnaticMIDI
+# carnatify
 
-This project provides functionality to convert Carnatic notation into MIDI files. To install, begin by cloning this repository. Change to this repository's local directory and run:
+Pure Rust Carnatic notation parser, with Python and JavaScript bindings.
 
-`./install.sh`
+## Notation
 
-This will install all the required packages and create a virtual environment called `carnatic`. Activate this virtual environment using:
+`S, r, R, g, G, m, M, P, d, D, n, N` — use `*` / `/` for octave, `,` for duration, `( … )` for speed.
 
-`source carnatic/bin/activate`
+See [`grammar/carnatic_notation_grammar.lark`](grammar/carnatic_notation_grammar.lark).
 
-Then execute:
+## Layout
 
-`python notes_to_midi.py -h`
+```
+crates/carnatify-core/   library
+crates/carnatify-wasm/   WASM bindings
+crates/carnatify-py/     Python bindings (PyO3)
+python/                  pip package (maturin)
+javascript/              npm package (wasm-pack)
+examples/rust/           CLI example
+examples/python/
+examples/javascript/
+```
 
-for more information on how to run the code on an input file.
+## Examples
 
-# Creating notation files
+**Rust** — play or export:
 
-The MIDI converter takes in any file which has notes according to the following structure. The 12 notes in the middle octave are represented as follows:
+```bash
+cargo run -p carnatify-example -- "SRGMP"
+cargo run -p carnatify-example -- "SRG" -o out.mid
+```
 
-`S, r, R, g, G, m, M, P, d, D, n, N`
+**Python:**
 
-To make the note higher octave add a `*` after the note. To make the note lower octave, add a `/` after the note. The following is an example notation of the first line of the Bilahari swarajathi Rara Venu Gopabala:
+```bash
+cd python && maturin develop --release
+python ../examples/python/example.py
+```
 
-`S,,RG,P,D,S*,N,D,P,DPmGRSRSN/D/S,,,`
+**JavaScript** — open `examples/javascript/index.html` after:
 
-The parser will ignore any character that is not one of the notes or `*` or `/`. This allows for spaces and newlines to format the notation to look nicer, such as the following:
+```bash
+cd javascript && npm run build
+```
 
-`S,,R G,P, | D,S*, N,D, ||`
+## License
 
-`P,DP mGRS | RSN/D/ S,,, ||`
+MIT

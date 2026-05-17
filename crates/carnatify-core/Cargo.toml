@@ -1,0 +1,17 @@
+[package]
+name = "carnatify-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Carnatic notation parser and audio/MIDI export"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+hound = "3.5.1"
+midly = "0.5.3"
+rodio = "0.22.2"

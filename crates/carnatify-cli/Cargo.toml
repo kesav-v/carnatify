@@ -1,0 +1,16 @@
+[package]
+name = "carnatify"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "CLI for Carnatic notation → MIDI, WAV, MP3, or JSON"
+
+[[bin]]
+name = "carnatify"
+path = "src/main.rs"
+
+[dependencies]
+carnatify-core = { workspace = true }
+clap = { version = "4.6.1", features = ["derive"] }

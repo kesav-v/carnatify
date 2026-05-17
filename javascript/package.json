@@ -1,0 +1,14 @@
+{
+  "name": "carnatify",
+  "version": "0.1.0",
+  "description": "Carnatic notation parser (WebAssembly)",
+  "type": "module",
+  "license": "MIT",
+  "files": ["src", "pkg"],
+  "main": "./src/index.js",
+  "types": "./pkg/carnatify_wasm.d.ts",
+  "exports": { ".": "./src/index.js" },
+  "scripts": {
+    "build": "wasm-pack build ../crates/carnatify-wasm --target web --out-dir pkg --out-name carnatify_wasm"
+  }
+}

@@ -1,2 +1,33 @@
 .DS_Store
-__pycache__
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Rust
+/target/
+**/target/
+
+# Python / maturin
+python/dist/
+python/.venv/
+*.egg-info/
+
+# JavaScript / wasm-pack
+javascript/pkg/
+javascript/node_modules/
+node_modules/
+
+# Build artifacts & local outputs
+*.mid
+*.wav
+*.mp3
+!examples/**
+
+# IDE
+.cursor/
+.vscode/
+
+# Legacy
+server/.venv/
+server/local/
